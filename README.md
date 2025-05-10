@@ -5,15 +5,8 @@ A minimal, secure Flask-based file storage service with support for user authent
 
 ## 📚 Table of Contents
 
-- [Requirements](#requirements)
 - [Features](#features)
-- [Folder Structure](#folder-structure)
-- [Authentication](#authentication)
-- [API Endpoints](#api-endpoints)
-  - [POST /api/upload](#post-apiupload)
-  - [GET /api/fetch/:uuid](#get-apifetchuuid)
-  - [GET /api/list](#get-apilist)
-  - [GET /api/roll-api-key](#get-apiroll-api-key)
+- [Requirements](#requirements)
 - [Notes](#notes)
 - [Installation Instructions](#installation-instructions)
   - [1. Clone the repository](#1-clone-the-repository)
@@ -23,6 +16,13 @@ A minimal, secure Flask-based file storage service with support for user authent
   - [5. Set up environment variables](#5-set-up-environment-variables)
   - [6. Run the application](#6-run-the-application)
   - [7. Testing the endpoints](#7-testing-the-endpoints)
+- [Folder Structure](#folder-structure)
+- [Authentication](#authentication)
+- [API Endpoints](#api-endpoints)
+  - [POST /api/upload](#post-apiupload)
+  - [GET /api/fetch/:uuid](#get-apifetchuuid)
+  - [GET /api/list](#get-apilist)
+  - [GET /api/roll-api-key](#get-apiroll-api-key)
 
 
 ## Features
@@ -42,6 +42,94 @@ A minimal, secure Flask-based file storage service with support for user authent
 ```bash
 pip install -r requirements.txt
 ```
+
+
+## Notes
+
+‼️ JWT authentication is not yet fully implemented — the backend currently requires a manually generated token from [JWT.io](https://jwt.io) for testing.
+
+A separate frontend project will be created to handle:
+- User signup and login
+- JWT creation and storage
+- Sending JWTs with requests
+- A simple GUI for using the backend
+
+This will remove the need to generate tokens manually and makes the app easier to use.
+
+## Installation Instructions
+
+### 1. Clone the repository
+    
+Start by cloning the repository to your local machine:
+
+```bash
+git clone https://github.com/thecoffeehound/python-blob-storage.git
+cd python-blob-storage
+```
+
+### 2. Create a virtual environment
+
+It is recommended to create a virtual environment to manage dependencies:
+
+```bash
+python3 -m venv venv
+```
+
+### 3. Activate the virtual environment
+
+On Linux/macOS:
+
+```bash
+source venv/bin/activate
+```
+
+On Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### 4. Install the dependencies
+
+After activating the virtual environment, install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+If you don't have a requirements.txt file yet, you can manually install the dependencies using pip:
+
+```bash
+pip install Flask pymongo python-dotenv pyjwt
+```
+
+### 5. Set up environment variables
+
+You need to configure environment variables for your app. Create a .env file in the project root and add the following variables:
+
+```
+MONGODB_URI=mongodb://localhost:27017  # MongoDB URI (adjust if using a remote instance)
+DB_NAME=python_blob_storage  # Database name
+JWT_SECRET=your_jwt_secret  # Secret for JWT token
+```
+
+Replace your_jwt_secret with a secure secret key for encoding and decoding JWT tokens.
+
+### 6. Run the application
+
+Now that everything is set up, you can run your Flask application:
+
+```bash
+python main.py
+```
+Your server should be running at http://127.0.0.1:5000.
+
+### 7. Testing the endpoints
+
+You can use tools like Postman or curl to test the API endpoints.
+
+For example, to upload a file, you can use a POST request to http://127.0.0.1:5000/api/upload with the proper headers and a file in the body.
+
 
 ## Folder Structure
 
@@ -137,86 +225,3 @@ blobs/
         "newApiKey": "<new-api-key>"
     }
     ```
-
-
-## Notes
-
-JWTs must be generated separately (e.g., using a login service).
-
-Files are saved locally. For production, you could adapt it to use cloud storage (AWS S3, Azure Blob, etc.).
-
-This is a backend-only project.
-
-## Installation Instructions
-
-### 1. Clone the repository
-    
-Start by cloning the repository to your local machine:
-
-```bash
-git clone https://github.com/thecoffeehound/python-blob-storage.git
-cd python-blob-storage
-```
-
-### 2. Create a virtual environment
-
-It is recommended to create a virtual environment to manage dependencies:
-
-```bash
-python3 -m venv venv
-```
-
-### 3. Activate the virtual environment
-
-On Linux/macOS:
-
-```bash
-source venv/bin/activate
-```
-
-On Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-### 4. Install the dependencies
-
-After activating the virtual environment, install the required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-If you don't have a requirements.txt file yet, you can manually install the dependencies using pip:
-
-```bash
-pip install Flask pymongo python-dotenv pyjwt
-```
-
-### 5. Set up environment variables
-
-You need to configure environment variables for your app. Create a .env file in the project root and add the following variables:
-
-```
-MONGODB_URI=mongodb://localhost:27017  # MongoDB URI (adjust if using a remote instance)
-DB_NAME=python_blob_storage  # Database name
-JWT_SECRET=your_jwt_secret  # Secret for JWT token
-```
-
-Replace your_jwt_secret with a secure secret key for encoding and decoding JWT tokens.
-
-### 6. Run the application
-
-Now that everything is set up, you can run your Flask application:
-
-```bash
-python main.py
-```
-Your server should be running at http://127.0.0.1:5000.
-
-### 7. Testing the endpoints
-
-You can use tools like Postman or curl to test the API endpoints.
-
-For example, to upload a file, you can use a POST request to http://127.0.0.1:5000/api/upload with the proper headers and a file in the body.
