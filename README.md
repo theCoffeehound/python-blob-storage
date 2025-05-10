@@ -51,15 +51,6 @@ blobs/
         └── <uuid>.ext
 ```
 
-## Authentication
-
-All routes (except root) require:
-
-- Authorization: Bearer <JWT> header
-- x-api-key: <api-key> header
-
-JWT is expected to include a user_id claim.
-
 ## API Endpoints
 
 ### POST /api/upload
